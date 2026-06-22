@@ -133,7 +133,7 @@
             font-size: 1.2rem;
             color: var(--text-gray);
             max-width: 600px;
-            animation: fadeInUp 1s ease-out0.2s forwards;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
             opacity: 0;
             animation-fill-mode: forwards;
         }
@@ -225,10 +225,10 @@
             font-size: 1.2rem;
         }
 
-        /* Featured Events Grid */
+        /* Featured Events Grid - Fixed for Full Photo Visibility */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
         }
 
@@ -241,18 +241,32 @@
         }
 
         .event-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Using contain and 16:9 aspect helper to ensure 100% photo visibility */
+        .event-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 40%; /* Controls the aspect ratio box */
+            background-color: #05090f; /* Dark background to pad containment spaces */
         }
 
         .event-img {
-            height: 180px;
-            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
         }
 
         .event-info {
             padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         /* Builds Section */
@@ -264,7 +278,7 @@
 
         .build-card {
             background: linear-gradient(145deg, #0f1926, #142234);
-            padding: 35px 20px;
+            padding: 40px 20px;
             text-align: center;
             border-radius: 8px;
             border-bottom: 4px solid var(--text-gray);
@@ -277,24 +291,13 @@
             box-shadow: 0 8px 20px rgba(0, 240, 255, 0.15);
         }
 
-        .build-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .build-card:hover .build-icon {
-            transform: scale(1.2);
-        }
-
         .build-card h3 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Shop Section (Buttons Removed) */
+        /* Shop Section */
         .shop-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -304,7 +307,7 @@
         .shop-item {
             background-color: var(--bg-card);
             border-radius: 8px;
-            padding: 35px 20px;
+            padding: 45px 20px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.03);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -318,20 +321,11 @@
             box-shadow: 0 5px 15px rgba(0, 136, 255, 0.2);
         }
 
-        .shop-item-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .shop-item:hover .shop-item-icon {
-            transform: rotate(5deg) scale(1.1);
-        }
-
         .shop-item h3 {
             font-size: 1.2rem;
             font-weight: 600;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         /* Exclusive/Premium Shop Items */
@@ -362,7 +356,6 @@
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <header>
         <div class="logo">Auro <span>Basketball</span></div>
         <nav>
@@ -374,7 +367,6 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>Welcome to <span>Auro Basketball</span></h1>
         <p>Experience the ultimate next-gen streetball simulator. Fine-tune your build, dominate the blacktop, and concrete your legacy.</p>
@@ -382,11 +374,9 @@
 
     <div class="container">
 
-        <!-- Updates, Season & Developer Announcements Section -->
         <section id="updates">
             <div class="dashboard-grid">
                 
-                <!-- Latest Update Banner -->
                 <div class="banner-update">
                     <span class="badge">Latest Update</span>
                     <h2>Version 2.4: Summer Heatwave Drop</h2>
@@ -395,16 +385,13 @@
                     </p>
                 </div>
 
-                <!-- Side Info Panels -->
                 <div class="side-panel">
-                    <!-- Season Info -->
                     <div class="card">
                         <span style="color: var(--accent-cyan); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Current Event</span>
                         <h3 style="margin-top: 5px;">Season 4: Rise to Glory</h3>
                         <p style="color: var(--text-gray); font-size: 14px;">Climb the competitive ladders today to claim exclusive animated rewards and frame tags before the timer expires.</p>
                     </div>
 
-                    <!-- Developer Announcements -->
                     <div class="card">
                         <h3>Dev Announcements</h3>
                         <p style="color: var(--text-gray); font-size: 14px;"><strong>Community Court Design:</strong> We're taking user submissions for our upcoming map update! Join the discord to submit layouts.</p>
@@ -414,23 +401,26 @@
             </div>
         </section>
 
-        <!-- Featured Events Section -->
         <section>
             <h2 class="section-title">Featured Events</h2>
             <div class="events-grid">
                 
                 <div class="event-card">
-                    <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610551721169028/2D3B23EA-E24B-4EE0-923A-3FA81E69658C.png?ex=6a3a8bc9&is=6a393a49&hm=f1d5efa690a222a30c4bef3308b87b2200a73c7a831b72f3440704414ae252c2&');"></div>
+                    <div class="event-img-wrapper">
+                        <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610551721169028/2D3B23EA-E24B-4EE0-923A-3FA81E69658C.png?ex=6a3a8bc9&is=6a393a49&hm=f1d5efa690a222a30c4bef3308b87b2200a73c7a831b72f3440704414ae252c2&');"></div>
+                    </div>
                     <div class="event-info">
-                        <h3 style="margin-bottom: 5px; text-transform: uppercase;">Weekend 3v3 Blitz</h3>
+                        <h3 style="margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Weekend 3v3 Blitz</h3>
                         <p style="color: var(--text-gray); font-size: 14px;">2x EXP multiplier active on all street courts this weekend only.</p>
                     </div>
                 </div>
 
                 <div class="event-card">
-                    <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610552019091466/60159e7b0d67e83b7592639938c7cc0e.png?ex=6a3a8bca&is=6a393a4a&hm=dd4bf7069a2f4d60576097cf6a1d12cb61f78515c2e4142674e70ab6b1a39828&');"></div>
+                    <div class="event-img-wrapper">
+                        <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610552019091466/60159e7b0d67e83b7592639938c7cc0e.png?ex=6a3a8bca&is=6a393a4a&hm=dd4bf7069a2f4d60576097cf6a1d12cb61f78515c2e4142674e70ab6b1a39828&');"></div>
+                    </div>
                     <div class="event-info">
-                        <h3 style="margin-bottom: 5px; text-transform: uppercase;">King of the Court</h3>
+                        <h3 style="margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">King of the Court</h3>
                         <p style="color: var(--text-gray); font-size: 14px;">1v1 tournament queue goes live this Friday. Secure your crown.</p>
                     </div>
                 </div>
@@ -438,86 +428,70 @@
             </div>
         </section>
 
-        <!-- Player Builds Section -->
         <section id="builds">
             <h2 class="section-title">Player Builds</h2>
             <div class="builds-grid">
                 
                 <div class="build-card">
-                    <span class="build-icon">⚡</span>
                     <h3>Point Guard</h3>
                 </div>
 
                 <div class="build-card">
-                    <span class="build-icon">🎯</span>
                     <h3>Shooting Guard</h3>
                 </div>
 
                 <div class="build-card">
-                    <span class="build-icon">🏃‍♂️</span>
                     <h3>Small Forward</h3>
                 </div>
 
                 <div class="build-card">
-                    <span class="build-icon">💪</span>
                     <h3>Power Forward</h3>
                 </div>
 
                 <div class="build-card">
-                    <span class="build-icon">🧱</span>
                     <h3>Center</h3>
                 </div>
 
             </div>
         </section>
 
-        <!-- Shop Section (Buttons Removed) -->
         <section id="shop">
             <h2 class="section-title">In-Game Shop</h2>
             <div class="shop-grid">
                 
                 <div class="shop-item">
-                    <div class="shop-item-icon">🎽</div>
                     <h3>Jerseys</h3>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">👟</div>
                     <h3>Shoes</h3>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">🕺</div>
                     <h3>Emotes</h3>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">🔥</div>
                     <h3>Celebrations</h3>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">🎨</div>
                     <h3>Name Colors</h3>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">🕶️</div>
                     <h3>Accessories</h3>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">🌐</div>
                     <h3>Court Effects</h3>
                 </div>
 
                 <div class="shop-item premium-item">
-                    <div class="shop-item-icon">🎟️</div>
                     <h3>VIP Pass</h3>
                 </div>
 
                 <div class="shop-item premium-item">
-                    <div class="shop-item-icon">💎</div>
                     <h3>Premium Currency</h3>
                 </div>
 
@@ -526,7 +500,6 @@
 
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 Auro Basketball. All rights reserved. Built for community reference.</p>
     </footer>
