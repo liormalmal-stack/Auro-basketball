@@ -59,6 +59,17 @@
             100% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.2); }
         }
 
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         /* Navigation */
         header {
             background-color: rgba(15, 25, 38, 0.95);
@@ -121,7 +132,6 @@
         .hero h1 {
             font-size: 3.5rem;
             text-transform: uppercase;
-            margin-bottom: 15px;
             letter-spacing: 2px;
             animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -129,6 +139,16 @@
         .hero h1 span {
             color: var(--primary-blue);
             text-shadow: 0 0 20px rgba(0, 136, 255, 0.5);
+        }
+
+        .coming-soon {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-top: -5px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            animation: fadeInUp 0.9s ease-out forwards;
         }
 
         .hero p {
@@ -326,7 +346,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            pointer-events: none; /* Prevents raw video interface clicking inside grid */
+            pointer-events: none;
         }
 
         .leak-item:hover {
@@ -335,13 +355,9 @@
             box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);
         }
 
-        /* Video leak play hint overlay */
         .video-hint::after {
             content: '▶';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-translate, -50%);
             background: rgba(0,0,0,0.7);
             color: white;
             width: 40px;
@@ -356,7 +372,7 @@
             border: 1px solid var(--accent-cyan);
         }
 
-        /* Lightbox Fullscreen Popup Styles */
+        /* Lightbox Fullscreen Gallery Layout */
         .lightbox {
             display: none;
             position: fixed;
@@ -364,19 +380,39 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(3, 6, 10, 0.95);
+            background-color: rgba(3, 6, 10, 0.96);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(8px);
+            user-select: none;
+        }
+
+        .lightbox-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        #lightboxContainer {
+            max-width: 80%;
+            max-height: 75%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .lightbox-content {
-            max-width: 85%;
-            max-height: 85%;
-            box-shadow: 0 0 30px rgba(0, 136, 255, 0.3);
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 100%;
+            max-height: 75vh;
+            box-shadow: 0 0 40px rgba(0, 136, 255, 0.4);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .lightbox-close {
@@ -387,11 +423,55 @@
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
-            transition: color 0.2s;
+            transition: color 0.2s, transform 0.2s;
+            z-index: 2100;
         }
 
         .lightbox-close:hover {
+            color: #ff3333;
+            transform: scale(1.1);
+        }
+
+        /* Gallery Arrows */
+        .lightbox-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 60px;
+            font-weight: 300;
+            cursor: pointer;
+            padding: 20px;
+            transition: color 0.2s, transform 0.2s, text-shadow 0.2s;
+            z-index: 2100;
+        }
+
+        .lightbox-arrow:hover {
             color: var(--accent-cyan);
+            text-shadow: 0 0 15px var(--accent-cyan);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .arrow-left { left: 40px; }
+        .arrow-right { right: 40px; }
+
+        @media (max-width: 768px) {
+            .lightbox-arrow { font-size: 45px; padding: 10px; }
+            .arrow-left { left: 10px; }
+            .arrow-right { right: 10px; }
+        }
+
+        /* Gallery Page Counter */
+        .lightbox-counter {
+            color: var(--text-gray);
+            font-size: 1rem;
+            margin-top: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: rgba(15, 25, 38, 0.6);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         /* Builds Section */
@@ -496,8 +576,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <h1>Welcome to <span>Auro Basketball</span></h1>
+        <div class="coming-soon">(Coming Soon)</div>
         <p>Experience the ultimate next-gen streetball simulator. Fine-tune your build, dominate the blacktop, and concrete your legacy.</p>
-        <!-- Square Light Blue Discord Button Layout -->
         <a href="https://discord.gg/bK2WGk35UE" target="_blank" class="btn-discord">
             <svg viewBox="0 0 127.14 96.36">
                 <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.72-11A68.32,68.32,0,0,1,28.23,80c1,.74,2,1.52,3,2.27a75,75,0,0,0,94.7,0c1-.75,2-1.53,3-2.27a68.42,68.42,0,0,1-10.45,5.39,74.91,74.91,0,0,0,6.72,11,105.73,105.73,0,0,0,31.06-18.83C129.66,50.31,123.75,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
@@ -508,11 +588,9 @@
 
     <div class="container">
 
-        <!-- Updates, Season & Developer Announcements Section -->
+        <!-- Updates Section -->
         <section id="updates">
             <div class="dashboard-grid">
-                
-                <!-- Latest Update Banner -->
                 <div class="banner-update">
                     <span class="badge">Latest Update</span>
                     <h2>Version 2.4: Summer Heatwave Drop</h2>
@@ -521,22 +599,17 @@
                     </p>
                 </div>
 
-                <!-- Side Info Panels -->
                 <div class="side-panel">
-                    <!-- Season Info -->
                     <div class="card">
                         <span style="color: var(--accent-cyan); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Current Event</span>
                         <h3 style="margin-top: 5px;">Season 4: Rise to Glory</h3>
                         <p style="color: var(--text-gray); font-size: 14px;">Climb the competitive ladders today to claim exclusive animated rewards and frame tags before the timer expires.</p>
                     </div>
-
-                    <!-- Developer Announcements -->
                     <div class="card">
                         <h3>Dev Announcements</h3>
                         <p style="color: var(--text-gray); font-size: 14px;"><strong>Community Court Design:</strong> We're taking user submissions for our upcoming map update! Join the discord to submit layouts.</p>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -544,7 +617,6 @@
         <section>
             <h2 class="section-title">Featured Events</h2>
             <div class="events-grid">
-                
                 <div class="event-card">
                     <div class="event-img-wrapper">
                         <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610551721169028/2D3B23EA-E24B-4EE0-923A-3FA81E69658C.png?ex=6a3a8bc9&is=6a393a49&hm=f1d5efa690a222a30c4bef3308b87b2200a73c7a831b72f3440704414ae252c2&');"></div>
@@ -564,7 +636,6 @@
                         <p style="color: var(--text-gray); font-size: 14px;">1v1 tournament queue goes live this Friday. Secure your crown.</p>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -572,43 +643,40 @@
         <section id="leaks">
             <h2 class="section-title">Development Leaks</h2>
             <div class="leaks-grid">
-                <!-- Row 1 assets -->
-                <div class="leak-item video-hint" onclick="openLightbox(this, true)">
+                <div class="leak-item video-hint" onclick="openGallery(0)">
                     <video src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638220542480626/mp4.mov?ex=6a3aa58e&is=6a39540e&hm=c9ceab66806cb5f762b1233ec2a4200cc4fff6323783b1d38742da4845b562b7&" muted></video>
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(1)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638221142130749/image.png?ex=6a3aa58e&is=6a39540e&hm=eef62f5498eac1e58f48d93d85d6218f8b058668f52f47578a0ddbfe42c5a02f&" alt="Leak">
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(2)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638221968543865/IMG_2577.png?ex=6a3aa58f&is=6a39540f&hm=85ee67b056d8fe75df0d607a6fe5489f4e19934dde6f6dc2167cb33bde85ff94&" alt="Leak">
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(3)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638222681571398/image.png?ex=6a3aa58f&is=6a39540f&hm=fbac833cb9398c701db22059e52b6d8894e65581430aa08d6be683b222878591&" alt="Leak">
                 </div>
-                <!-- Row 2 assets -->
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(4)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638222236844053/image.png?ex=6a3aa58f&is=6a39540f&hm=f3d696ab02880200729b9b2f3843eeb42c6aa74915d4ebaa90369552b3ae4673&" alt="Leak">
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(5)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638224233336994/126A560D-57C0-411A-90F8-FDE60A6B28F5.png?ex=6a3aa58f&is=6a39540f&hm=abd7f83dbf1f506c34b45a27b10fb2e0ac942cb00cd1e079b658b8cfbd34f63c&" alt="Leak">
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(6)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638223377826033/IMG_9663.png?ex=6a3aa58f&is=6a39540f&hm=9ae334bcf88f3cc5f34b31482b6ee5edb3ef77d977ee2046e87c17f4f86abcb7&" alt="Leak">
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(7)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638245393596666/676BC184-3D78-4606-89B5-385555827F43.png?ex=6a3aa594&is=6a395414&hm=26c8f86e9f91e46d50fc0acdc4d351c77d2b45a165dd380740a579430986f5da&" alt="Leak">
                 </div>
-                <!-- Row 3 assets -->
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(8)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638245024628877/image.png?ex=6a3aa594&is=6a395414&hm=294aba4768acdb3d81acc9081b1a2616973c5ce22febd8fe821aa845a99d35c0&" alt="Leak">
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(9)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638246387646535/gui_main_menu_backup_2.png?ex=6a3aa594&is=6a395414&hm=bd56b26fe30532584fb05be5a0c49ba79495b4a5670c3cf401a85b0ddd5abf27&" alt="Leak">
                 </div>
-                <div class="leak-item video-hint" onclick="openLightbox(this, true)">
+                <div class="leak-item video-hint" onclick="openGallery(10)">
                     <video src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638247830356129/mp4.mov?ex=6a3aa595&is=6a395415&hm=b2c7cda655b4f9032d1243cc986add30b096f2248b10548b021a1fda02c9bfb6&" muted></video>
                 </div>
-                <div class="leak-item" onclick="openLightbox(this, false)">
+                <div class="leak-item" onclick="openGallery(11)">
                     <img src="https://cdn.discordapp.com/attachments/1434564912713171096/1518638247067123883/IMG_2577.png?ex=6a3aa595&is=6a395415&hm=c648cc5967e1b9c8e121a79ed8c2922ade2510864bfeb2592a9499678cd3bf8c&" alt="Leak">
                 </div>
             </div>
@@ -618,27 +686,11 @@
         <section id="builds">
             <h2 class="section-title">Player Builds</h2>
             <div class="builds-grid">
-                
-                <div class="build-card">
-                    <h3>Point Guard</h3>
-                </div>
-
-                <div class="build-card">
-                    <h3>Shooting Guard</h3>
-                </div>
-
-                <div class="build-card">
-                    <h3>Small Forward</h3>
-                </div>
-
-                <div class="build-card">
-                    <h3>Power Forward</h3>
-                </div>
-
-                <div class="build-card">
-                    <h3>Center</h3>
-                </div>
-
+                <div class="build-card"><h3>Point Guard</h3></div>
+                <div class="build-card"><h3>Shooting Guard</h3></div>
+                <div class="build-card"><h3>Small Forward</h3></div>
+                <div class="build-card"><h3>Power Forward</h3></div>
+                <div class="build-card"><h3>Center</h3></div>
             </div>
         </section>
 
@@ -646,43 +698,15 @@
         <section id="shop">
             <h2 class="section-title">In-Game Shop</h2>
             <div class="shop-grid">
-                
-                <div class="shop-item">
-                    <h3>Jerseys</h3>
-                </div>
-
-                <div class="shop-item">
-                    <h3>Shoes</h3>
-                </div>
-
-                <div class="shop-item">
-                    <h3>Emotes</h3>
-                </div>
-
-                <div class="shop-item">
-                    <h3>Celebrations</h3>
-                </div>
-
-                <div class="shop-item">
-                    <h3>Name Colors</h3>
-                </div>
-
-                <div class="shop-item">
-                    <h3>Accessories</h3>
-                </div>
-
-                <div class="shop-item">
-                    <h3>Court Effects</h3>
-                </div>
-
-                <div class="shop-item premium-item">
-                    <h3>VIP Pass</h3>
-                </div>
-
-                <div class="shop-item premium-item">
-                    <h3>Premium Currency</h3>
-                </div>
-
+                <div class="shop-item"><h3>Jerseys</h3></div>
+                <div class="shop-item"><h3>Shoes</h3></div>
+                <div class="shop-item"><h3>Emotes</h3></div>
+                <div class="shop-item"><h3>Celebrations</h3></div>
+                <div class="shop-item"><h3>Name Colors</h3></div>
+                <div class="shop-item"><h3>Accessories</h3></div>
+                <div class="shop-item"><h3>Court Effects</h3></div>
+                <div class="shop-item premium-item"><h3>VIP Pass</h3></div>
+                <div class="shop-item premium-item"><h3>Premium Currency</h3></div>
             </div>
         </section>
 
@@ -691,8 +715,14 @@
     <!-- Fullscreen Lightbox Frame -->
     <div id="lightboxDisplay" class="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-        <div id="lightboxContainer" onclick="event.stopPropagation()">
-            <!-- Dynamic elements load here -->
+        <span class="lightbox-arrow arrow-left" onclick="changeMedia(-1, event)">&#x2039;</span>
+        <span class="lightbox-arrow arrow-right" onclick="changeMedia(1, event)">&#x203A;</span>
+        
+        <div class="lightbox-wrapper">
+            <div id="lightboxContainer" onclick="event.stopPropagation()">
+                <!-- Dynamic contents fill here -->
+            </div>
+            <div id="lightboxCounter" class="lightbox-counter">1 / 12</div>
         </div>
     </div>
 
@@ -701,44 +731,79 @@
         <p>&copy; 2026 Auro Basketball. All rights reserved. Built for community reference.</p>
     </footer>
 
-    <!-- JavaScript For Lightbox Processing -->
+    <!-- JavaScript Gallery System -->
     <script>
-        function openLightbox(element, isVideo) {
-            const display = document.getElementById('lightboxDisplay');
+        let currentIdx = 0;
+        const mediaItems = [];
+
+        // Build array of assets automatically on startup
+        document.querySelectorAll('.leak-item').forEach((item) => {
+            const img = item.querySelector('img');
+            const vid = item.querySelector('video');
+            mediaItems.push({
+                src: img ? img.src : vid.src,
+                isVideo: !!vid
+            });
+        });
+
+        function openGallery(index) {
+            currentIdx = index;
+            renderMedia();
+            document.getElementById('lightboxDisplay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderMedia() {
             const container = document.getElementById('lightboxContainer');
-            container.innerHTML = ''; // Clean old contents
-            
-            if (isVideo) {
-                const videoSource = element.querySelector('video').src;
+            const counter = document.getElementById('lightboxCounter');
+            const activeItem = mediaItems[currentIdx];
+            container.innerHTML = ''; // Fresh render
+
+            if (activeItem.isVideo) {
                 const videoEl = document.createElement('video');
-                videoEl.src = videoSource;
+                videoEl.src = activeItem.src;
                 videoEl.className = 'lightbox-content';
                 videoEl.controls = true;
                 videoEl.autoplay = true;
                 container.appendChild(videoEl);
             } else {
-                const imageSource = element.querySelector('img').src;
                 const imgEl = document.createElement('img');
-                imgEl.src = imageSource;
+                imgEl.src = activeItem.src;
                 imgEl.className = 'lightbox-content';
                 container.appendChild(imgEl);
             }
+
+            counter.textContent = `${currentIdx + 1} / ${mediaItems.length}`;
+        }
+
+        function changeMedia(direction, event) {
+            if (event) event.stopPropagation(); // Block closing lightbox
+            currentIdx += direction;
             
-            display.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Lock background scroll
+            // Endless looping rotation logic
+            if (currentIdx >= mediaItems.length) currentIdx = 0;
+            if (currentIdx < 0) currentIdx = mediaItems.length - 1;
+            
+            renderMedia();
         }
 
         function closeLightbox() {
-            const display = document.getElementById('lightboxDisplay');
             const container = document.getElementById('lightboxContainer');
-            
-            // Turn off running media streams inside box before closing
             const videoEl = container.querySelector('video');
-            if(videoEl) { videoEl.pause(); }
+            if(videoEl) videoEl.pause();
             
-            display.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Free background scroll
+            document.getElementById('lightboxDisplay').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
+
+        // Arrow keyboard key accessibility support
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightboxDisplay').style.display === 'flex') {
+                if (e.key === 'ArrowRight') changeMedia(1);
+                if (e.key === 'ArrowLeft') changeMedia(-1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
     </script>
 </body>
 </html>
