@@ -1,701 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Auro Basketball</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<style>
-  /* ── Tokens ── */
-  :root {
-    --court-black:  #0A0A0F;
-    --court-dark:   #12121A;
-    --panel:        #1A1A26;
-    --border:       #2A2A3E;
-    --auro-gold:    #F5C842;
-    --auro-orange:  #F57C1F;
-    --auro-glow:    rgba(245,200,66,.18);
-    --text-primary: #F0EFEA;
-    --text-muted:   #7A7A9A;
-    --text-dim:     #4A4A6A;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body:    'Inter', sans-serif;
-    --font-mono:    'DM Mono', monospace;
-    --radius:       10px;
-    --transition:   .25s ease;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auro Basketball | Official Site</title>
+    <style>
+        /* Base Styles & Theme Variables */
+        :root {
+            --bg-dark: #0d0e12;
+            --bg-card: #161920;
+            --primary-orange: #ff6b00;
+            --primary-hover: #e05e00;
+            --text-light: #ffffff;
+            --text-gray: #a0a5b5;
+            --accent-blue: #00e5ff;
+        }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-  html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
 
-  body {
-    background: var(--court-black);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-  a { color: inherit; text-decoration: none; }
-  img { display: block; max-width: 100%; }
+        /* Navigation */
+        header {
+            background-color: rgba(22, 25, 32, 0.95);
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-orange);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-  /* ── Nav ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(10,10,15,.85);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%;
-    height: 64px;
-  }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, var(--auro-gold), var(--auro-orange));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .nav-links { display: flex; gap: 2rem; align-items: center; }
-  .nav-links a {
-    font-size: .875rem; font-weight: 500; letter-spacing: .5px;
-    color: var(--text-muted); transition: color var(--transition);
-  }
-  .nav-links a:hover { color: var(--auro-gold); }
-  .nav-cta {
-    background: var(--auro-gold); color: var(--court-black) !important;
-    padding: .45rem 1.2rem; border-radius: 6px; font-weight: 700 !important;
-    letter-spacing: .5px; transition: background var(--transition) !important;
-  }
-  .nav-cta:hover { background: var(--auro-orange) !important; color: #fff !important; }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-  /* ── Hero ── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center;
-    padding: 80px 5% 60px;
-    position: relative;
-    overflow: hidden;
-  }
-  /* Court-line SVG background */
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 60%, rgba(245,200,66,.07) 0%, transparent 70%),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 900 900'%3E%3Ccircle cx='450' cy='450' r='200' fill='none' stroke='%232A2A3E' stroke-width='1.5'/%3E%3Ccircle cx='450' cy='450' r='60' fill='none' stroke='%232A2A3E' stroke-width='1.5'/%3E%3Crect x='100' y='200' width='700' height='500' fill='none' stroke='%232A2A3E' stroke-width='1.5' rx='8'/%3E%3Crect x='100' y='300' width='180' height='300' fill='none' stroke='%232A2A3E' stroke-width='1'/%3E%3Crect x='620' y='300' width='180' height='300' fill='none' stroke='%232A2A3E' stroke-width='1'/%3E%3Cline x1='450' y1='200' x2='450' y2='700' stroke='%232A2A3E' stroke-width='1'/%3E%3C/svg%3E") center/cover no-repeat;
-  }
-  .hero-eyebrow {
-    font-family: var(--font-mono); font-size: .8rem; letter-spacing: 4px;
-    color: var(--auro-orange); text-transform: uppercase; margin-bottom: 1.2rem;
-  }
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(4.5rem, 12vw, 10rem);
-    line-height: .95;
-    letter-spacing: 4px;
-    background: linear-gradient(160deg, var(--auro-gold) 30%, var(--auro-orange) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 1.4rem;
-    position: relative;
-  }
-  .hero-sub {
-    max-width: 520px; color: var(--text-muted);
-    font-size: 1.05rem; line-height: 1.7; margin-bottom: 2.5rem;
-  }
-  .btn-play {
-    display: inline-flex; align-items: center; gap: .7rem;
-    background: linear-gradient(135deg, var(--auro-gold), var(--auro-orange));
-    color: var(--court-black); font-weight: 800; font-size: 1.1rem;
-    padding: 1rem 2.5rem; border-radius: 50px; letter-spacing: 1px;
-    box-shadow: 0 0 40px rgba(245,200,66,.35);
-    transition: transform var(--transition), box-shadow var(--transition);
-    position: relative; overflow: hidden;
-  }
-  .btn-play::after {
-    content: ''; position: absolute; inset: 0;
-    background: rgba(255,255,255,.15); opacity: 0;
-    transition: opacity var(--transition);
-  }
-  .btn-play:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(245,200,66,.5); }
-  .btn-play:hover::after { opacity: 1; }
-  .btn-play svg { width: 22px; height: 22px; fill: var(--court-black); }
+        .logo span {
+            color: var(--primary-orange);
+        }
 
-  /* ── Update Banner ── */
-  .update-banner {
-    background: linear-gradient(90deg, var(--panel), #1E1E30);
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    padding: 1rem 5%;
-    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-  }
-  .badge-new {
-    background: var(--auro-orange); color: #fff;
-    font-family: var(--font-mono); font-size: .7rem; font-weight: 500;
-    padding: .25rem .65rem; border-radius: 4px; text-transform: uppercase; flex-shrink: 0;
-  }
-  .banner-text { font-size: .9rem; color: var(--text-primary); }
-  .banner-text span { color: var(--auro-gold); font-weight: 600; }
-  .banner-date { margin-left: auto; font-family: var(--font-mono); font-size: .78rem; color: var(--text-muted); }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-  /* ── Sections ── */
-  section { padding: 90px 5%; }
-  .section-label {
-    font-family: var(--font-mono); font-size: .75rem; letter-spacing: 4px;
-    color: var(--auro-orange); text-transform: uppercase; margin-bottom: .6rem;
-  }
-  .section-title {
-    font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.5rem);
-    letter-spacing: 2px; line-height: 1; margin-bottom: 1rem;
-  }
-  .section-desc { color: var(--text-muted); max-width: 520px; font-size: .95rem; margin-bottom: 3rem; }
+        nav ul a {
+            font-weight: 600;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
 
-  /* ── Featured Events ── */
-  .events-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;
-  }
-  .event-card {
-    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
-    overflow: hidden; transition: transform var(--transition), border-color var(--transition);
-  }
-  .event-card:hover { transform: translateY(-4px); border-color: var(--auro-gold); }
-  .event-card-banner {
-    height: 120px; display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 2px;
-  }
-  .ev-1 { background: linear-gradient(135deg, #1a1040, #3a1060); color: #c084fc; }
-  .ev-2 { background: linear-gradient(135deg, #0a2a1a, #104030); color: #34d399; }
-  .ev-3 { background: linear-gradient(135deg, #2a1000, #4a2000); color: var(--auro-gold); }
-  .ev-4 { background: linear-gradient(135deg, #001a2a, #003050); color: #38bdf8; }
-  .event-body { padding: 1.2rem; }
-  .event-title { font-weight: 700; margin-bottom: .3rem; }
-  .event-meta { font-size: .8rem; color: var(--text-muted); margin-bottom: .8rem; }
-  .event-tag {
-    display: inline-block; font-family: var(--font-mono); font-size: .7rem;
-    padding: .2rem .6rem; border-radius: 4px; border: 1px solid var(--border); color: var(--text-muted);
-  }
+        nav ul a:hover {
+            color: var(--primary-orange);
+        }
 
-  /* ── Season Info ── */
-  .season-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem;
-  }
-  .season-stat {
-    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 1.6rem; text-align: center;
-  }
-  .season-stat-num {
-    font-family: var(--font-display); font-size: 3.2rem; letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--auro-gold), var(--auro-orange));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .season-stat-label { font-size: .82rem; color: var(--text-muted); margin-top: .3rem; letter-spacing: 1px; }
+        /* Hero / Welcome Section */
+        .hero {
+            margin-top: 80px;
+            height: 70vh;
+            background: linear-gradient(rgba(13, 14, 18, 0.6), rgba(13, 14, 18, 0.9)), 
+                        url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610905276088380/701a3ccbe5f53badc45addb053c13e7c.png?ex=6a3a8c1e&is=6a393a9e&hm=26fc218e28a2b728ea709a573a448175979a20a5bf8fa7edb8514207c57a39cd&') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
 
-  /* ── Dev Announcements ── */
-  .announcements { display: flex; flex-direction: column; gap: 1.2rem; }
-  .announcement {
-    background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--auro-gold);
-    border-radius: var(--radius); padding: 1.4rem 1.6rem;
-    display: flex; gap: 1.5rem; align-items: flex-start;
-    transition: border-color var(--transition);
-  }
-  .announcement:hover { border-left-color: var(--auro-orange); }
-  .ann-icon {
-    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--auro-glow); font-size: 1.2rem;
-  }
-  .ann-title { font-weight: 700; margin-bottom: .25rem; }
-  .ann-text { font-size: .875rem; color: var(--text-muted); }
-  .ann-date { font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim); margin-top: .5rem; }
+        .hero h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
 
-  /* ── Builds ── */
-  .builds-tabs {
-    display: flex; gap: .8rem; flex-wrap: wrap; margin-bottom: 2rem;
-  }
-  .tab-btn {
-    font-family: var(--font-mono); font-size: .78rem; letter-spacing: 1px;
-    padding: .5rem 1.2rem; border-radius: 6px; border: 1px solid var(--border);
-    background: transparent; color: var(--text-muted); cursor: pointer;
-    transition: all var(--transition);
-  }
-  .tab-btn:hover, .tab-btn.active {
-    background: var(--auro-gold); color: var(--court-black);
-    border-color: var(--auro-gold); font-weight: 700;
-  }
-  .builds-content { display: none; }
-  .builds-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
-  .build-card {
-    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 1.4rem; transition: border-color var(--transition), transform var(--transition);
-  }
-  .build-card:hover { border-color: var(--auro-gold); transform: translateY(-3px); }
-  .build-name { font-weight: 700; font-size: 1.05rem; margin-bottom: .5rem; }
-  .build-role { font-family: var(--font-mono); font-size: .72rem; color: var(--auro-orange); margin-bottom: .8rem; }
-  .build-bars { display: flex; flex-direction: column; gap: .5rem; }
-  .build-bar-row { display: flex; align-items: center; gap: .7rem; font-size: .78rem; color: var(--text-muted); }
-  .build-bar-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; }
-  .build-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--auro-gold), var(--auro-orange)); }
-  .build-bar-label { width: 70px; }
-  .build-bar-val { width: 28px; text-align: right; color: var(--text-primary); font-weight: 500; }
+        .hero h1 span {
+            color: var(--primary-orange);
+            text-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
+        }
 
-  /* ── Shop ── */
-  #shop { background: var(--court-dark); }
-  .shop-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem;
-  }
-  .shop-item {
-    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 1.6rem 1.2rem; text-align: center;
-    transition: border-color var(--transition), transform var(--transition);
-    cursor: pointer;
-  }
-  .shop-item:hover { border-color: var(--auro-gold); transform: translateY(-4px); }
-  .shop-icon { font-size: 2.5rem; margin-bottom: .8rem; }
-  .shop-name { font-weight: 700; font-size: .95rem; margin-bottom: .3rem; }
-  .shop-desc { font-size: .78rem; color: var(--text-muted); margin-bottom: 1rem; }
-  .shop-price {
-    display: inline-block; background: var(--auro-glow); border: 1px solid rgba(245,200,66,.3);
-    color: var(--auro-gold); font-family: var(--font-mono); font-size: .82rem;
-    padding: .3rem .8rem; border-radius: 4px;
-  }
-  .vip-card {
-    grid-column: 1 / -1;
-    background: linear-gradient(135deg, #1a1008, #2a1c00);
-    border: 1px solid rgba(245,200,66,.4);
-    border-radius: var(--radius); padding: 2rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
-  }
-  .vip-badge {
-    font-family: var(--font-display); font-size: 3rem; letter-spacing: 3px;
-    background: linear-gradient(135deg, var(--auro-gold), var(--auro-orange));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .vip-desc { font-size: .9rem; color: var(--text-muted); max-width: 400px; }
-  .vip-btn {
-    background: linear-gradient(135deg, var(--auro-gold), var(--auro-orange));
-    color: var(--court-black); font-weight: 800; font-size: .95rem;
-    padding: .8rem 2rem; border-radius: 8px; white-space: nowrap;
-    transition: transform var(--transition); cursor: pointer;
-  }
-  .vip-btn:hover { transform: scale(1.04); }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
 
-  /* ── Footer ── */
-  footer {
-    background: #07070E; border-top: 1px solid var(--border);
-    padding: 3rem 5%; text-align: center;
-    color: var(--text-dim); font-size: .82rem;
-  }
-  footer .footer-logo {
-    font-family: var(--font-display); font-size: 2.5rem;
-    background: linear-gradient(90deg, var(--auro-gold), var(--auro-orange));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
-  }
-  footer .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  footer .footer-links a { color: var(--text-muted); transition: color var(--transition); font-size: .85rem; }
-  footer .footer-links a:hover { color: var(--auro-gold); }
+        .btn-play {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
 
-  /* ── Divider ── */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+        .btn-play:hover {
+            background-color: var(--primary-hover);
+            transform: scale(1.05);
+        }
 
-  /* ── Responsive ── */
-  @media (max-width: 640px) {
-    .nav-links { display: none; }
-    .vip-card { flex-direction: column; text-align: center; }
-    .builds-tabs { gap: .4rem; }
-  }
+        /* Main Content Structure */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
 
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition: none !important; }
-  }
-</style>
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-orange);
+            padding-left: 15px;
+        }
+
+        /* Update & Info Hub Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+
+        .banner-update {
+            background: linear-gradient(rgba(22, 25, 32, 0.85), rgba(22, 25, 32, 0.95)), 
+                        url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610711415361556/3e4db7db7c2a79ec3edd1e2cdd7427f2.png?ex=6a3a8bf0&is=6a393a70&hm=62fb467ae463163184d30ea65dda60bb074c1ebf1dfc29fac59f6b2a049e2a97&') no-repeat center center/cover;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,107,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .badge {
+            background-color: var(--accent-blue);
+            color: #000;
+            padding: 3px 10px;
+            font-weight: 700;
+            font-size: 12px;
+            border-radius: 3px;
+            width: fit-content;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card h3 {
+            color: var(--primary-orange);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+
+        /* Featured Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .event-img {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .event-info {
+            padding: 20px;
+        }
+
+        /* Builds Section */
+        .builds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .build-card {
+            background: linear-gradient(145deg, #161920, #1f242e);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 8px;
+            border-bottom: 4px solid var(--text-gray);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .build-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-orange);
+        }
+
+        .build-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .build-card h3 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Shop Section */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .shop-item {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .shop-item-icon {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .shop-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            background: transparent;
+            border: 1px solid var(--primary-orange);
+            color: var(--primary-orange);
+            padding: 8px 0;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+
+        .premium-tag {
+            border-color: var(--accent-blue) !important;
+            color: var(--accent-blue) !important;
+        }
+        .premium-tag:hover {
+            background-color: var(--accent-blue) !important;
+            color: #000 !important;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #08090c;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-logo">AURO</span>
-  <div class="nav-links">
-    <a href="#home">Home</a>
-    <a href="#events">Events</a>
-    <a href="#season">Season</a>
-    <a href="#builds">Builds</a>
-    <a href="#shop">Shop</a>
-    <a href="#shop" class="nav-cta">Play Now</a>
-  </div>
-</nav>
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">Auro <span>Basketball</span></div>
+        <nav>
+            <ul>
+                <li><a href="#updates">Updates</a></li>
+                <li><a href="#builds">Player Builds</a></li>
+                <li><a href="#shop">Shop</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <p class="hero-eyebrow">Season 4 · Live Now</p>
-  <h1 class="hero-title">AURO<br>BASKETBALL</h1>
-  <p class="hero-sub">The court is yours. Build your legend, dominate every position, and rise through the ranks in the most immersive basketball experience ever made.</p>
-  <a href="#" class="btn-play">
-    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-    PLAY NOW
-  </a>
-</section>
+    <!-- Hero / Welcome Section -->
+    <section class="hero">
+        <h1>Welcome to <span>Auro Basketball</span></h1>
+        <p>Experience the ultimate next-gen streetball simulator. Fine-tune your build, dominate the blacktop, and concrete your legacy.</p>
+        <a href="#" class="btn-play">Play Now</a>
+    </section>
 
-<!-- UPDATE BANNER -->
-<div class="update-banner">
-  <span class="badge-new">Latest</span>
-  <p class="banner-text"><span>Patch 4.3.1 is live</span> — New Court Effects, balance changes to PG & Center builds, and the Neon Nights Jersey Collection.</p>
-  <span class="banner-date">June 20, 2026</span>
-</div>
+    <div class="container">
 
-<hr class="divider" />
+        <!-- Updates, Season & Developer Announcements Section -->
+        <section id="updates">
+            <div class="dashboard-grid">
+                
+                <!-- Latest Update Banner -->
+                <div class="banner-update">
+                    <span class="badge">Latest Update</span>
+                    <h2>Version 2.4: Summer Heatwave Drop</h2>
+                    <p style="margin: 15px 0 25px 0; color: var(--text-gray); max-width: 500px;">
+                        Dive into upgraded dribble mechanics, newly optimized servers, and court-balancing fixes designed for peak competitive play.
+                    </p>
+                    <a href="#" style="color: var(--primary-orange); font-weight: 700; text-transform: uppercase; font-size: 14px;">Read Full Patch Notes →</a>
+                </div>
 
-<!-- FEATURED EVENTS -->
-<section id="events">
-  <p class="section-label">Events</p>
-  <h2 class="section-title">Featured Events</h2>
-  <p class="section-desc">Limited-time tournaments, seasonal challenges, and community showdowns. Win big, earn rare rewards.</p>
-  <div class="events-grid">
-    <div class="event-card">
-      <div class="event-card-banner ev-1">🏆 SLAM CUP</div>
-      <div class="event-body">
-        <p class="event-title">Slam Cup Invitational</p>
-        <p class="event-meta">Jul 1 – Jul 14, 2026 · All Divisions</p>
-        <span class="event-tag">Tournament</span>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-card-banner ev-2">🌿 SUMMER RUN</div>
-      <div class="event-body">
-        <p class="event-title">Summer Run Challenge</p>
-        <p class="event-meta">Jun 22 – Jul 7, 2026 · Solo & Duo</p>
-        <span class="event-tag">Challenge</span>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-card-banner ev-3">🔥 BLACKTOP</div>
-      <div class="event-body">
-        <p class="event-title">Blacktop Classic</p>
-        <p class="event-meta">Jun 28 – Jun 30, 2026 · 3v3</p>
-        <span class="event-tag">Weekend Event</span>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-card-banner ev-4">❄️ FREEZE OUT</div>
-      <div class="event-body">
-        <p class="event-title">Freeze Out Series</p>
-        <p class="event-meta">Jul 10 – Jul 20, 2026 · 5v5</p>
-        <span class="event-tag">Ranked</span>
-      </div>
-    </div>
-  </div>
-</section>
+                <!-- Side Info Panels -->
+                <div class="side-panel">
+                    <!-- Season Info -->
+                    <div class="card">
+                        <span style="color: var(--accent-blue); font-size: 12px; font-weight: 700; text-transform: uppercase;">Current Event</span>
+                        <h3>Season 4: Rise to Glory</h3>
+                        <p style="color: var(--text-gray); font-size: 14px;">Climb the competitive ladders today to claim exclusive animated rewards and frame tags before the timer expires.</p>
+                    </div>
 
-<hr class="divider" />
+                    <!-- Developer Announcements -->
+                    <div class="card">
+                        <h3>Dev Announcements</h3>
+                        <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 10px;"><strong>Community Court Design:</strong> We're taking user submissions for our upcoming map update! Join the discord to submit layouts.</p>
+                    </div>
+                </div>
 
-<!-- SEASON INFO -->
-<section id="season">
-  <p class="section-label">Season 4</p>
-  <h2 class="section-title">Season Information</h2>
-  <p class="section-desc">Track your progress, understand the competitive ladder, and know what's at stake this season.</p>
-  <div class="season-grid">
-    <div class="season-stat">
-      <p class="season-stat-num">42</p>
-      <p class="season-stat-label">Days Remaining</p>
-    </div>
-    <div class="season-stat">
-      <p class="season-stat-num">7</p>
-      <p class="season-stat-label">Rank Tiers</p>
-    </div>
-    <div class="season-stat">
-      <p class="season-stat-num">120</p>
-      <p class="season-stat-label">Reward Levels</p>
-    </div>
-    <div class="season-stat">
-      <p class="season-stat-num">18</p>
-      <p class="season-stat-label">Playable Courts</p>
-    </div>
-    <div class="season-stat">
-      <p class="season-stat-num">5v5</p>
-      <p class="season-stat-label">Main Game Mode</p>
-    </div>
-    <div class="season-stat">
-      <p class="season-stat-num">3v3</p>
-      <p class="season-stat-label">Street Mode</p>
-    </div>
-  </div>
-</section>
+            </div>
+        </section>
 
-<hr class="divider" />
+        <!-- Featured Events Section -->
+        <section>
+            <h2 class="section-title">Featured Events</h2>
+            <div class="events-grid">
+                
+                <div class="event-card">
+                    <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610551721169028/2D3B23EA-E24B-4EE0-923A-3FA81E69658C.png?ex=6a3a8bc9&is=6a393a49&hm=f1d5efa690a222a30c4bef3308b87b2200a73c7a831b72f3440704414ae252c2&');"></div>
+                    <div class="event-info">
+                        <h3 style="margin-bottom: 5px; text-transform: uppercase;">Weekend 3v3 Blitz</h3>
+                        <p style="color: var(--text-gray); font-size: 14px;">2x EXP multiplier active on all street courts this weekend only.</p>
+                    </div>
+                </div>
 
-<!-- DEV ANNOUNCEMENTS -->
-<section id="announcements">
-  <p class="section-label">From the Team</p>
-  <h2 class="section-title">Developer Announcements</h2>
-  <p class="section-desc">Straight from the Auro dev team — what's being worked on, what's changed, and what's coming next.</p>
-  <div class="announcements">
-    <div class="announcement">
-      <div class="ann-icon">🛠️</div>
-      <div>
-        <p class="ann-title">Patch 4.3.1 — Balance & Bug Fixes</p>
-        <p class="ann-text">We've adjusted the speed ceiling on Point Guard builds after community feedback flagged exploit potential at max agility. Center block ratings also received a minor recalibration across all tiers.</p>
-        <p class="ann-date">June 20, 2026</p>
-      </div>
-    </div>
-    <div class="announcement">
-      <div class="ann-icon">🗺️</div>
-      <div>
-        <p class="ann-title">Season 5 Roadmap Preview</p>
-        <p class="ann-text">Season 5 introduces two new courts, a redesigned ranked ladder with demotion shields, and a brand-new game mode: Draft League. More details dropping in our July dev diary.</p>
-        <p class="ann-date">June 15, 2026</p>
-      </div>
-    </div>
-    <div class="announcement">
-      <div class="ann-icon">📊</div>
-      <div>
-        <p class="ann-title">Community Report: Season 3 Data</p>
-        <p class="ann-text">Season 3 was our biggest yet — 4.2M games played, 98k unique players, and a Small Forward meta that dominated. Full breakdown in the link below.</p>
-        <p class="ann-date">June 5, 2026</p>
-      </div>
-    </div>
-  </div>
-</section>
+                <div class="event-card">
+                    <div class="event-img" style="background-image: url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610552019091466/60159e7b0d67e83b7592639938c7cc0e.png?ex=6a3a8bca&is=6a393a4a&hm=dd4bf7069a2f4d60576097cf6a1d12cb61f78515c2e4142674e70ab6b1a39828&');"></div>
+                    <div class="event-info">
+                        <h3 style="margin-bottom: 5px; text-transform: uppercase;">King of the Court</h3>
+                        <p style="color: var(--text-gray); font-size: 14px;">1v1 tournament queue goes live this Friday. Secure your crown.</p>
+                    </div>
+                </div>
 
-<hr class="divider" />
+            </div>
+        </section>
 
-<!-- BUILDS -->
-<section id="builds">
-  <p class="section-label">Build Hub</p>
-  <h2 class="section-title">Position Builds</h2>
-  <p class="section-desc">Optimized archetypes for every position. Pick your role and find the build that fits your playstyle.</p>
+        <!-- Player Builds Section -->
+        <section id="builds">
+            <h2 class="section-title">Player Builds</h2>
+            <div class="builds-grid">
+                
+                <div class="build-card">
+                    <span class="build-icon">⚡</span>
+                    <h3>Point Guard</h3>
+                </div>
 
-  <div class="builds-tabs">
-    <button class="tab-btn active" onclick="switchTab('pg')">Point Guard</button>
-    <button class="tab-btn" onclick="switchTab('sg')">Shooting Guard</button>
-    <button class="tab-btn" onclick="switchTab('sf')">Small Forward</button>
-    <button class="tab-btn" onclick="switchTab('pf')">Power Forward</button>
-    <button class="tab-btn" onclick="switchTab('c')">Center</button>
-  </div>
+                <div class="build-card">
+                    <span class="build-icon">🎯</span>
+                    <h3>Shooting Guard</h3>
+                </div>
 
-  <!-- PG -->
-  <div class="builds-content active" id="builds-pg">
-    <div class="build-card">
-      <p class="build-name">Flashpoint</p>
-      <p class="build-role">Playmaker · Speed Focus</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Speed</span><div class="build-bar-track"><div class="build-bar-fill" style="width:95%"></div></div><span class="build-bar-val">95</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Passing</span><div class="build-bar-track"><div class="build-bar-fill" style="width:90%"></div></div><span class="build-bar-val">90</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Ball Handle</span><div class="build-bar-track"><div class="build-bar-fill" style="width:88%"></div></div><span class="build-bar-val">88</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">3-PT</span><div class="build-bar-track"><div class="build-bar-fill" style="width:60%"></div></div><span class="build-bar-val">60</span></div>
-      </div>
-    </div>
-    <div class="build-card">
-      <p class="build-name">Sniper PG</p>
-      <p class="build-role">Combo Guard · Shooting Focus</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Speed</span><div class="build-bar-track"><div class="build-bar-fill" style="width:78%"></div></div><span class="build-bar-val">78</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">3-PT</span><div class="build-bar-track"><div class="build-bar-fill" style="width:93%"></div></div><span class="build-bar-val">93</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Mid-Range</span><div class="build-bar-track"><div class="build-bar-fill" style="width:85%"></div></div><span class="build-bar-val">85</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Passing</span><div class="build-bar-track"><div class="build-bar-fill" style="width:72%"></div></div><span class="build-bar-val">72</span></div>
-      </div>
-    </div>
-    <div class="build-card">
-      <p class="build-name">Floor General</p>
-      <p class="build-role">Pure Playmaker · Pass-First</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Passing</span><div class="build-bar-track"><div class="build-bar-fill" style="width:98%"></div></div><span class="build-bar-val">98</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">IQ</span><div class="build-bar-track"><div class="build-bar-fill" style="width:95%"></div></div><span class="build-bar-val">95</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Ball Handle</span><div class="build-bar-track"><div class="build-bar-fill" style="width:84%"></div></div><span class="build-bar-val">84</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Scoring</span><div class="build-bar-track"><div class="build-bar-fill" style="width:55%"></div></div><span class="build-bar-val">55</span></div>
-      </div>
-    </div>
-  </div>
+                <div class="build-card">
+                    <span class="build-icon">🏃‍♂️</span>
+                    <h3>Small Forward</h3>
+                </div>
 
-  <!-- SG -->
-  <div class="builds-content" id="builds-sg">
-    <div class="build-card">
-      <p class="build-name">Bucket Getter</p>
-      <p class="build-role">Scorer · Isolation</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Mid-Range</span><div class="build-bar-track"><div class="build-bar-fill" style="width:97%"></div></div><span class="build-bar-val">97</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">3-PT</span><div class="build-bar-track"><div class="build-bar-fill" style="width:85%"></div></div><span class="build-bar-val">85</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Ball Handle</span><div class="build-bar-track"><div class="build-bar-fill" style="width:80%"></div></div><span class="build-bar-val">80</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Defense</span><div class="build-bar-track"><div class="build-bar-fill" style="width:60%"></div></div><span class="build-bar-val">60</span></div>
-      </div>
-    </div>
-    <div class="build-card">
-      <p class="build-name">3&D Wing</p>
-      <p class="build-role">Two-Way · Defensive Focus</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Defense</span><div class="build-bar-track"><div class="build-bar-fill" style="width:92%"></div></div><span class="build-bar-val">92</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">3-PT</span><div class="build-bar-track"><div class="build-bar-fill" style="width:88%"></div></div><span class="build-bar-val">88</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Speed</span><div class="build-bar-track"><div class="build-bar-fill" style="width:82%"></div></div><span class="build-bar-val">82</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Ball Handle</span><div class="build-bar-track"><div class="build-bar-fill" style="width:65%"></div></div><span class="build-bar-val">65</span></div>
-      </div>
-    </div>
-  </div>
+                <div class="build-card">
+                    <span class="build-icon">💪</span>
+                    <h3>Power Forward</h3>
+                </div>
 
-  <!-- SF -->
-  <div class="builds-content" id="builds-sf">
-    <div class="build-card">
-      <p class="build-name">Wing Scorer</p>
-      <p class="build-role">Slasher · Athletic</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Driving</span><div class="build-bar-track"><div class="build-bar-fill" style="width:96%"></div></div><span class="build-bar-val">96</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Athleticism</span><div class="build-bar-track"><div class="build-bar-fill" style="width:94%"></div></div><span class="build-bar-val">94</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Finishing</span><div class="build-bar-track"><div class="build-bar-fill" style="width:91%"></div></div><span class="build-bar-val">91</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">3-PT</span><div class="build-bar-track"><div class="build-bar-fill" style="width:64%"></div></div><span class="build-bar-val">64</span></div>
-      </div>
-    </div>
-    <div class="build-card">
-      <p class="build-name">Do-It-All</p>
-      <p class="build-role">Versatile · Balanced</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Defense</span><div class="build-bar-track"><div class="build-bar-fill" style="width:85%"></div></div><span class="build-bar-val">85</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Rebounding</span><div class="build-bar-track"><div class="build-bar-fill" style="width:80%"></div></div><span class="build-bar-val">80</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Scoring</span><div class="build-bar-track"><div class="build-bar-fill" style="width:82%"></div></div><span class="build-bar-val">82</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Passing</span><div class="build-bar-track"><div class="build-bar-fill" style="width:75%"></div></div><span class="build-bar-val">75</span></div>
-      </div>
-    </div>
-  </div>
+                <div class="build-card">
+                    <span class="build-icon">🧱</span>
+                    <h3>Center</h3>
+                </div>
 
-  <!-- PF -->
-  <div class="builds-content" id="builds-pf">
-    <div class="build-card">
-      <p class="build-name">Stretch 4</p>
-      <p class="build-role">Power Forward · Shooting</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">3-PT</span><div class="build-bar-track"><div class="build-bar-fill" style="width:90%"></div></div><span class="build-bar-val">90</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Strength</span><div class="build-bar-track"><div class="build-bar-fill" style="width:80%"></div></div><span class="build-bar-val">80</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Rebounding</span><div class="build-bar-track"><div class="build-bar-fill" style="width:74%"></div></div><span class="build-bar-val">74</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Speed</span><div class="build-bar-track"><div class="build-bar-fill" style="width:72%"></div></div><span class="build-bar-val">72</span></div>
-      </div>
-    </div>
-    <div class="build-card">
-      <p class="build-name">Glass Eater</p>
-      <p class="build-role">Post Anchor · Rebounding</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Rebounding</span><div class="build-bar-track"><div class="build-bar-fill" style="width:97%"></div></div><span class="build-bar-val">97</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Strength</span><div class="build-bar-track"><div class="build-bar-fill" style="width:92%"></div></div><span class="build-bar-val">92</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Post Scoring</span><div class="build-bar-track"><div class="build-bar-fill" style="width:84%"></div></div><span class="build-bar-val">84</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Speed</span><div class="build-bar-track"><div class="build-bar-fill" style="width:55%"></div></div><span class="build-bar-val">55</span></div>
-      </div>
-    </div>
-  </div>
+            </div>
+        </section>
 
-  <!-- C -->
-  <div class="builds-content" id="builds-c">
-    <div class="build-card">
-      <p class="build-name">The Wall</p>
-      <p class="build-role">Defensive Anchor · Rim Protector</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Blocking</span><div class="build-bar-track"><div class="build-bar-fill" style="width:99%"></div></div><span class="build-bar-val">99</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Strength</span><div class="build-bar-track"><div class="build-bar-fill" style="width:96%"></div></div><span class="build-bar-val">96</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Rebounding</span><div class="build-bar-track"><div class="build-bar-fill" style="width:90%"></div></div><span class="build-bar-val">90</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Offense</span><div class="build-bar-track"><div class="build-bar-fill" style="width:45%"></div></div><span class="build-bar-val">45</span></div>
-      </div>
-    </div>
-    <div class="build-card">
-      <p class="build-name">Twin Tower</p>
-      <p class="build-role">Scoring Big · Interior</p>
-      <div class="build-bars">
-        <div class="build-bar-row"><span class="build-bar-label">Post Scoring</span><div class="build-bar-track"><div class="build-bar-fill" style="width:94%"></div></div><span class="build-bar-val">94</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Strength</span><div class="build-bar-track"><div class="build-bar-fill" style="width:90%"></div></div><span class="build-bar-val">90</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Rebounding</span><div class="build-bar-track"><div class="build-bar-fill" style="width:85%"></div></div><span class="build-bar-val">85</span></div>
-        <div class="build-bar-row"><span class="build-bar-label">Speed</span><div class="build-bar-track"><div class="build-bar-fill" style="width:50%"></div></div><span class="build-bar-val">50</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+        <!-- Shop Section -->
+        <section id="shop">
+            <h2 class="section-title">In-Game Shop</h2>
+            <div class="shop-grid">
+                
+                <div class="shop-item">
+                    <div class="shop-item-icon">🎽</div>
+                    <h3>Jerseys</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
 
-<hr class="divider" />
+                <div class="shop-item">
+                    <div class="shop-item-icon">👟</div>
+                    <h3>Shoes</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
 
-<!-- SHOP -->
-<section id="shop">
-  <p class="section-label">Shop</p>
-  <h2 class="section-title">Items Available</h2>
-  <p class="section-desc">Customize your player, flex on the court, and stand out from the crowd with premium cosmetics and passes.</p>
-  <div class="shop-grid">
-    <div class="shop-item">
-      <div class="shop-icon">👕</div>
-      <p class="shop-name">Jerseys</p>
-      <p class="shop-desc">Rep your style with exclusive team and custom jersey designs.</p>
-      <span class="shop-price">From 400 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">👟</div>
-      <p class="shop-name">Shoes</p>
-      <p class="shop-desc">Signature kicks with stat boosts and visual flair.</p>
-      <span class="shop-price">From 350 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">🕺</div>
-      <p class="shop-name">Emotes</p>
-      <p class="shop-desc">Say it without words. Taunt, celebrate, vibe.</p>
-      <span class="shop-price">From 200 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">🎉</div>
-      <p class="shop-name">Celebrations</p>
-      <p class="shop-desc">Full team animations triggered after big plays.</p>
-      <span class="shop-price">From 500 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">🖋️</div>
-      <p class="shop-name">Name Colors</p>
-      <p class="shop-desc">Make your name glow, gradient, or rare.</p>
-      <span class="shop-price">From 150 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">💎</div>
-      <p class="shop-name">Accessories</p>
-      <p class="shop-desc">Headbands, sleeves, chains, and more.</p>
-      <span class="shop-price">From 250 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">✨</div>
-      <p class="shop-name">Court Effects</p>
-      <p class="shop-desc">Transform the court beneath your feet with particle effects.</p>
-      <span class="shop-price">From 600 AC</span>
-    </div>
-    <div class="shop-item">
-      <div class="shop-icon">🪙</div>
-      <p class="shop-name">Premium Currency</p>
-      <p class="shop-desc">Auro Coins — the official in-game currency. Multiple bundles available.</p>
-      <span class="shop-price">Real Money</span>
-    </div>
-    <!-- VIP PASS FULL WIDTH -->
-    <div class="vip-card">
-      <div>
-        <div class="vip-badge">⭐ VIP PASS</div>
-        <p style="font-weight:700; font-size:1.1rem; margin-bottom:.5rem;">Season 4 VIP Pass</p>
-        <p class="vip-desc">Unlock 120 tiers of rewards — exclusive jerseys, premium emotes, bonus AC, and early access to every patch drop. The ultimate season experience.</p>
-      </div>
-      <div class="vip-btn">Get VIP Pass — $9.99</div>
-    </div>
-  </div>
-</section>
+                <div class="shop-item">
+                    <div class="shop-item-icon">🕺</div>
+                    <h3>Emotes</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
 
-<!-- FOOTER -->
-<footer>
-  <p class="footer-logo">AURO BASKETBALL</p>
-  <div class="footer-links">
-    <a href="#">Home</a>
-    <a href="#">Events</a>
-    <a href="#">Season</a>
-    <a href="#">Builds</a>
-    <a href="#">Shop</a>
-    <a href="#">Support</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms of Service</a>
-  </div>
-  <p>© 2026 Auro Basketball. All rights reserved. All in-game items are cosmetic only.</p>
-</footer>
+                <div class="shop-item">
+                    <div class="shop-item-icon">🔥</div>
+                    <h3>Celebrations</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
 
-<script>
-  function switchTab(pos) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.builds-content').forEach(c => c.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    document.getElementById('builds-' + pos).classList.add('active');
-  }
-</script>
+                <div class="shop-item">
+                    <div class="shop-item-icon">🎨</div>
+                    <h3>Name Colors</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
+
+                <div class="shop-item">
+                    <div class="shop-item-icon">🕶️</div>
+                    <h3>Accessories</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
+
+                <div class="shop-item">
+                    <div class="shop-item-icon">⚡</div>
+                    <h3>Court Effects</h3>
+                    <button class="btn-buy">View Items</button>
+                </div>
+
+                <div class="shop-item" style="border: 1px solid var(--accent-blue);">
+                    <div class="shop-item-icon" style="color: var(--accent-blue);">🎟️</div>
+                    <h3>VIP Pass</h3>
+                    <button class="btn-buy premium-tag">Unlock Pass</button>
+                </div>
+
+                <div class="shop-item" style="border: 1px solid var(--accent-blue);">
+                    <div class="shop-item-icon" style="color: var(--accent-blue);">💎</div>
+                    <h3>Premium Currency</h3>
+                    <button class="btn-buy premium-tag">Purchase</button>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Auro Basketball. All rights reserved. Built for community reference.</p>
+    </footer>
+
 </body>
 </html>
