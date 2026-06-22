@@ -7,13 +7,13 @@
     <style>
         /* Base Styles & Theme Variables */
         :root {
-            --bg-dark: #0d0e12;
-            --bg-card: #161920;
-            --primary-orange: #ff6b00;
-            --primary-hover: #e05e00;
+            --bg-dark: #060b13;
+            --bg-card: #0f1926;
+            --primary-blue: #0088ff;
+            --primary-hover: #0066cc;
+            --accent-cyan: #00f0ff;
             --text-light: #ffffff;
-            --text-gray: #a0a5b5;
-            --accent-blue: #00e5ff;
+            --text-gray: #8fa0b5;
         }
 
         * {
@@ -23,10 +23,15 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         a {
@@ -34,18 +39,37 @@
             color: inherit;
         }
 
+        /* Keyframes for animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cyanGlowPulse {
+            0% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.2); }
+            50% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.2); }
+        }
+
         /* Navigation */
         header {
-            background-color: rgba(22, 25, 32, 0.95);
+            background-color: rgba(15, 25, 38, 0.95);
             padding: 20px 5%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 2px solid var(--primary-orange);
+            border-bottom: 2px solid var(--primary-blue);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(10px);
         }
 
         .logo {
@@ -56,7 +80,8 @@
         }
 
         .logo span {
-            color: var(--primary-orange);
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
         }
 
         nav ul {
@@ -67,21 +92,22 @@
 
         nav ul a {
             font-weight: 600;
-            transition: color 0.3s;
+            transition: color 0.3s, text-shadow 0.3s;
             text-transform: uppercase;
             font-size: 14px;
         }
 
         nav ul a:hover {
-            color: var(--primary-orange);
+            color: var(--accent-cyan);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
         }
 
-        /* Hero / Welcome Section */
+        /* Hero Section */
         .hero {
             margin-top: 80px;
-            height: 70vh;
-            background: linear-gradient(rgba(13, 14, 18, 0.6), rgba(13, 14, 18, 0.9)), 
-                        url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610905276088380/701a3ccbe5f53badc45addb053c13e7c.png?ex=6a3a8c1e&is=6a393a9e&hm=26fc218e28a2b728ea709a573a448175979a20a5bf8fa7edb8514207c57a39cd&') no-repeat center center/cover;
+            height: 65vh;
+            background: linear-gradient(rgba(6, 11, 19, 0.5), rgba(6, 11, 19, 0.95)), 
+                        url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610551721169028/2D3B23EA-E24B-4EE0-923A-3FA81E69658C.png?ex=6a3a8bc9&is=6a393a49&hm=f1d5efa690a222a30c4bef3308b87b2200a73c7a831b72f3440704414ae252c2&') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -93,37 +119,23 @@
         .hero h1 {
             font-size: 3.5rem;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
         .hero h1 span {
-            color: var(--primary-orange);
-            text-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
+            color: var(--primary-blue);
+            text-shadow: 0 0 20px rgba(0, 136, 255, 0.5);
         }
 
         .hero p {
             font-size: 1.2rem;
             color: var(--text-gray);
-            margin-bottom: 30px;
             max-width: 600px;
-        }
-
-        .btn-play {
-            background-color: var(--primary-orange);
-            color: white;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border-radius: 5px;
-            text-transform: uppercase;
-            transition: transform 0.2s, background-color 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
-        }
-
-        .btn-play:hover {
-            background-color: var(--primary-hover);
-            transform: scale(1.05);
+            animation: fadeInUp 1s ease-out0.2s forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
 
         /* Main Content Structure */
@@ -134,19 +146,20 @@
         }
 
         section {
-            margin-bottom: 60px;
-            scroll-margin-top: 100px;
+            margin-bottom: 70px;
+            scroll-margin-top: 120px;
         }
 
         .section-title {
             font-size: 2rem;
             text-transform: uppercase;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--primary-orange);
+            margin-bottom: 35px;
+            border-left: 5px solid var(--accent-cyan);
             padding-left: 15px;
+            letter-spacing: 1px;
         }
 
-        /* Update & Info Hub Grid */
+        /* Updates Grid */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -158,26 +171,32 @@
         }
 
         .banner-update {
-            background: linear-gradient(rgba(22, 25, 32, 0.85), rgba(22, 25, 32, 0.95)), 
+            background: linear-gradient(rgba(15, 25, 38, 0.85), rgba(15, 25, 38, 0.98)), 
                         url('https://cdn.discordapp.com/attachments/1434564912713171096/1518610711415361556/3e4db7db7c2a79ec3edd1e2cdd7427f2.png?ex=6a3a8bf0&is=6a393a70&hm=62fb467ae463163184d30ea65dda60bb074c1ebf1dfc29fac59f6b2a049e2a97&') no-repeat center center/cover;
             padding: 40px;
             border-radius: 8px;
-            border: 1px solid rgba(255,107,0,0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
             display: flex;
             flex-direction: column;
             justify-content: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .banner-update:hover {
+            border-color: var(--accent-cyan);
         }
 
         .badge {
-            background-color: var(--accent-blue);
+            background-color: var(--accent-cyan);
             color: #000;
-            padding: 3px 10px;
+            padding: 4px 12px;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
             border-radius: 3px;
             width: fit-content;
             text-transform: uppercase;
             margin-bottom: 15px;
+            letter-spacing: 1px;
         }
 
         .side-panel {
@@ -190,11 +209,17 @@
             background-color: var(--bg-card);
             padding: 25px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 136, 255, 0.3);
         }
 
         .card h3 {
-            color: var(--primary-orange);
+            color: var(--primary-blue);
             margin-bottom: 10px;
             text-transform: uppercase;
             font-size: 1.2rem;
@@ -204,18 +229,24 @@
         .events-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
         .event-card {
             background-color: var(--bg-card);
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s;
+        }
+
+        .event-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         .event-img {
-            height: 160px;
+            height: 180px;
             background-size: cover;
             background-position: center;
         }
@@ -232,23 +263,29 @@
         }
 
         .build-card {
-            background: linear-gradient(145deg, #161920, #1f242e);
-            padding: 30px 20px;
+            background: linear-gradient(145deg, #0f1926, #142234);
+            padding: 35px 20px;
             text-align: center;
             border-radius: 8px;
             border-bottom: 4px solid var(--text-gray);
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
         }
 
         .build-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-orange);
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 8px 20px rgba(0, 240, 255, 0.15);
         }
 
         .build-icon {
             font-size: 2.5rem;
             margin-bottom: 15px;
             display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .build-card:hover .build-icon {
+            transform: scale(1.2);
         }
 
         .build-card h3 {
@@ -257,7 +294,7 @@
             letter-spacing: 1px;
         }
 
-        /* Shop Section */
+        /* Shop Section (Buttons Removed) */
         .shop-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -267,58 +304,59 @@
         .shop-item {
             background-color: var(--bg-card);
             border-radius: 8px;
-            padding: 20px;
+            padding: 35px 20px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            cursor: pointer;
+        }
+
+        .shop-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 5px 15px rgba(0, 136, 255, 0.2);
         }
 
         .shop-item-icon {
-            font-size: 3rem;
-            margin: 20px 0;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .shop-item:hover .shop-item-icon {
+            transform: rotate(5deg) scale(1.1);
         }
 
         .shop-item h3 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .btn-buy {
-            background: transparent;
-            border: 1px solid var(--primary-orange);
-            color: var(--primary-orange);
-            padding: 8px 0;
-            border-radius: 4px;
+            font-size: 1.2rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            letter-spacing: 0.5px;
         }
 
-        .btn-buy:hover {
-            background-color: var(--primary-orange);
-            color: white;
+        /* Exclusive/Premium Shop Items */
+        .premium-item {
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            animation: cyanGlowPulse 3s infinite;
         }
 
-        .premium-tag {
-            border-color: var(--accent-blue) !important;
-            color: var(--accent-blue) !important;
+        .premium-item:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
         }
-        .premium-tag:hover {
-            background-color: var(--accent-blue) !important;
-            color: #000 !important;
+
+        .premium-item h3 {
+            color: var(--accent-cyan);
         }
 
         /* Footer */
         footer {
-            background-color: #08090c;
+            background-color: #03060a;
             text-align: center;
             padding: 40px 20px;
             color: var(--text-gray);
             font-size: 14px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255,255,255,0.03);
         }
     </style>
 </head>
@@ -336,11 +374,10 @@
         </nav>
     </header>
 
-    <!-- Hero / Welcome Section -->
+    <!-- Hero Section -->
     <section class="hero">
         <h1>Welcome to <span>Auro Basketball</span></h1>
         <p>Experience the ultimate next-gen streetball simulator. Fine-tune your build, dominate the blacktop, and concrete your legacy.</p>
-        <a href="#" class="btn-play">Play Now</a>
     </section>
 
     <div class="container">
@@ -353,25 +390,24 @@
                 <div class="banner-update">
                     <span class="badge">Latest Update</span>
                     <h2>Version 2.4: Summer Heatwave Drop</h2>
-                    <p style="margin: 15px 0 25px 0; color: var(--text-gray); max-width: 500px;">
+                    <p style="margin: 15px 0 0 0; color: var(--text-gray); max-width: 500px;">
                         Dive into upgraded dribble mechanics, newly optimized servers, and court-balancing fixes designed for peak competitive play.
                     </p>
-                    <a href="#" style="color: var(--primary-orange); font-weight: 700; text-transform: uppercase; font-size: 14px;">Read Full Patch Notes →</a>
                 </div>
 
                 <!-- Side Info Panels -->
                 <div class="side-panel">
                     <!-- Season Info -->
                     <div class="card">
-                        <span style="color: var(--accent-blue); font-size: 12px; font-weight: 700; text-transform: uppercase;">Current Event</span>
-                        <h3>Season 4: Rise to Glory</h3>
+                        <span style="color: var(--accent-cyan); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Current Event</span>
+                        <h3 style="margin-top: 5px;">Season 4: Rise to Glory</h3>
                         <p style="color: var(--text-gray); font-size: 14px;">Climb the competitive ladders today to claim exclusive animated rewards and frame tags before the timer expires.</p>
                     </div>
 
                     <!-- Developer Announcements -->
                     <div class="card">
                         <h3>Dev Announcements</h3>
-                        <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 10px;"><strong>Community Court Design:</strong> We're taking user submissions for our upcoming map update! Join the discord to submit layouts.</p>
+                        <p style="color: var(--text-gray); font-size: 14px;"><strong>Community Court Design:</strong> We're taking user submissions for our upcoming map update! Join the discord to submit layouts.</p>
                     </div>
                 </div>
 
@@ -435,7 +471,7 @@
             </div>
         </section>
 
-        <!-- Shop Section -->
+        <!-- Shop Section (Buttons Removed) -->
         <section id="shop">
             <h2 class="section-title">In-Game Shop</h2>
             <div class="shop-grid">
@@ -443,55 +479,46 @@
                 <div class="shop-item">
                     <div class="shop-item-icon">🎽</div>
                     <h3>Jerseys</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
                 <div class="shop-item">
                     <div class="shop-item-icon">👟</div>
                     <h3>Shoes</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
                 <div class="shop-item">
                     <div class="shop-item-icon">🕺</div>
                     <h3>Emotes</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
                 <div class="shop-item">
                     <div class="shop-item-icon">🔥</div>
                     <h3>Celebrations</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
                 <div class="shop-item">
                     <div class="shop-item-icon">🎨</div>
                     <h3>Name Colors</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
                 <div class="shop-item">
                     <div class="shop-item-icon">🕶️</div>
                     <h3>Accessories</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
                 <div class="shop-item">
-                    <div class="shop-item-icon">⚡</div>
+                    <div class="shop-item-icon">🌐</div>
                     <h3>Court Effects</h3>
-                    <button class="btn-buy">View Items</button>
                 </div>
 
-                <div class="shop-item" style="border: 1px solid var(--accent-blue);">
-                    <div class="shop-item-icon" style="color: var(--accent-blue);">🎟️</div>
+                <div class="shop-item premium-item">
+                    <div class="shop-item-icon">🎟️</div>
                     <h3>VIP Pass</h3>
-                    <button class="btn-buy premium-tag">Unlock Pass</button>
                 </div>
 
-                <div class="shop-item" style="border: 1px solid var(--accent-blue);">
-                    <div class="shop-item-icon" style="color: var(--accent-blue);">💎</div>
+                <div class="shop-item premium-item">
+                    <div class="shop-item-icon">💎</div>
                     <h3>Premium Currency</h3>
-                    <button class="btn-buy premium-tag">Purchase</button>
                 </div>
 
             </div>
