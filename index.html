@@ -14,6 +14,8 @@
             --accent-cyan: #00f0ff;
             --discord-blue: #5865F2;
             --discord-hover: #4752C4;
+            --roblox-black: #11141a;
+            --roblox-hover: #1e232e;
             --text-light: #ffffff;
             --text-gray: #8fa0b5;
         }
@@ -161,25 +163,56 @@
             animation-fill-mode: forwards;
         }
 
-        /* Discord Button Styling */
-        .btn-discord {
-            background-color: var(--discord-blue);
-            color: white !important;
+        /* Action Buttons Row Wrapper */
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInUp 1.2s ease-out 0.4s forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 20px;
+            }
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Shared Button Core Layout */
+        .btn-action {
             padding: 14px 28px;
             font-size: 1.1rem;
             font-weight: 700;
             border-radius: 6px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            animation: fadeInUp 1.2s ease-out 0.4s forwards;
-            opacity: 0;
-            animation-fill-mode: forwards;
+        }
+
+        .btn-action svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+            fill: currentColor;
+        }
+
+        /* Discord Button Theme Fix */
+        .btn-discord {
+            background-color: var(--discord-blue);
+            color: white !important;
         }
 
         .btn-discord:hover {
@@ -188,10 +221,18 @@
             box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
         }
 
-        .btn-discord svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
+        /* Roblox Button Theme */
+        .btn-roblox {
+            background-color: var(--roblox-black);
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-roblox:hover {
+            background-color: var(--roblox-hover);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
         /* Main Content Structure */
@@ -578,12 +619,25 @@
         <h1>Welcome to <span>Auro Basketball</span></h1>
         <div class="coming-soon">(Coming Soon)</div>
         <p>Experience the ultimate next-gen streetball simulator. Fine-tune your build, dominate the blacktop, and concrete your legacy.</p>
-        <a href="https://discord.gg/bK2WGk35UE" target="_blank" class="btn-discord">
-            <svg viewBox="0 0 127.14 96.36">
-                <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.72-11A68.32,68.32,0,0,1,28.23,80c1,.74,2,1.52,3,2.27a75,75,0,0,0,94.7,0c1-.75,2-1.53,3-2.27a68.42,68.42,0,0,1-10.45,5.39,74.91,74.91,0,0,0,6.72,11,105.73,105.73,0,0,0,31.06-18.83C129.66,50.31,123.75,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
-            </svg>
-            Join
-        </a>
+        
+        <!-- Interactive Buttons Placement Grid -->
+        <div class="hero-buttons">
+            <!-- Discord Button Frame -->
+            <a href="https://discord.gg/bK2WGk35UE" target="_blank" class="btn-action btn-discord">
+                <svg viewBox="0 0 127.14 96.36">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.72-11A68.32,68.32,0,0,1,28.23,80c1,.74,2,1.52,3,2.27a75,75,0,0,0,94.7,0c1-.75,2-1.53,3-2.27a68.42,68.42,0,0,1-10.45,5.39,74.91,74.91,0,0,0,6.72,11,105.73,105.73,0,0,0,31.06-18.83C129.66,50.31,123.75,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
+                </svg>
+                Join
+            </a>
+
+            <!-- Roblox Button Frame -->
+            <a href="https://www.roblox.com/games/71964557149550/Auro-Basketball" target="_blank" class="btn-action btn-roblox">
+                <svg viewBox="0 0 60 60">
+                    <path d="M10.18,41.94L41.94,51.82L51.82,20.06L20.06,10.18L10.18,41.94ZM27.05,27.05L34.89,29.49L32.45,37.33L24.61,34.89L27.05,27.05Z"/>
+                </svg>
+                Join
+            </a>
+        </div>
     </section>
 
     <div class="container">
